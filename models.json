@@ -1,5 +1,10 @@
-[
-  {"name": "colour_NEP_2xE4", "platform": "iOS", "path": "IOS/colour_NEP_2xE4.usdc"}
-,
-  {"name": "Coloured_NEP_2xE4", "platform": "Android", "path": "Android/Coloured_NEP_2xE4.glb"}
-]
+{
+    "model1": {
+        "ios": "https://github.com/AliceStelfox/NEP/raw/main/IOS/a-helix.usdz",
+        "android": "https://github.com/AliceStelfox/NEP/raw/main/Android/a-helix.glb"
+    },
+    "model2": {
+        "ios": "https://github.com/AliceStelfox/NEP/raw/main/IOS/beta-sheet.usdz",
+        "android": "https://github.com/AliceStelfox/NEP/raw/main/Android/beta-sheet.glb"
+    }
+}
