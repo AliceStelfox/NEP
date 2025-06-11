@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QR Code AR Viewer</title>
+    <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+        }
+        model-viewer {
+            width: 100%;
+            height: 500px;
+            margin: 20px 0;
+        }
+    </style>
+</head>
+<body>
+    <h1>QR Code AR Viewer</h1>
+    <div id="instruction">Click on the cube at the bottom right of the screen to download the model.</div>
+    <model-viewer id="ar-model-viewer" 
+                  src="" 
+                  ios-src="" 
+                  alt="A 3D model" 
+                  auto-rotate 
+                  camera-controls 
+                  ar
+                  camera-orbit="45deg 55deg 2.5m"
+                  exposure="1.5"
+                  environment-image="neutral"
+                  ar-modes="scene-viewer quick-look webxr"
+                  scale="0.1 0.1 0.1"
+                  on-error="handleModelError">
+    </model-viewer>
+    <script>
+        async function fetchModelsConfig() {
+            try {
+                const response = await fetch('models.json');
+                if (!response.ok) {
+                    throw new Error('Failed to fetch models configuration');
+                }
+                return await response.json();
+            } catch (error) {
+                console.error('Error fetching models configuration:', error);
+                return null;
+            }
+        }
+
+        function handleModelError(event) {
+            console.error('Model Viewer Error:', event);
+            alert('There was an error loading the AR model. Please try again.');
+        }
+
+        async function setModelSource(modelId) {
+            try {
+                const models = await fetchModelsConfig();
+                if (!models) return;
+
+                const modelViewer = document.getElementById('ar-model-viewer');
+                const userAgent = navigator.userAgent || navigator.vendor || window.opera;
+
+                const baseIOSUrl = 'https://github.com/JMB-Scripts/AR-Structural-Biology/raw/main/IOS/';
+                const baseAndroidUrl = 'https://github.com/JMB-Scripts/AR-Structural-Biology/raw/main/Android/';
+
+                if (!models[modelId]) {
+                    console.error('Invalid model ID:', modelId);
+                    return;
+                }
+
+                if (/iPad|iPhone|iPod/.test(userAgent) && !window.MSStream) {
+                    modelViewer.setAttribute('src', '');
+                    modelViewer.setAttribute('ios-src', baseIOSUrl + models[modelId].ios);
+                } else {
+                    modelViewer.setAttribute('src', baseAndroidUrl + models[modelId].android);
+                    modelViewer.setAttribute('ios-src', '');
+                }
+
+                console.log('Model ID:', modelId);
+                console.log('User Agent:', userAgent);
+                console.log('Model URL:', modelViewer.getAttribute('src') || modelViewer.getAttribute('ios-src'));
+            } catch (error) {
+                console.error('Error setting model source:', error);
+            }
+        }
+
+        const urlParams = new URLSearchParams(window.location.search);
+        const modelId = urlParams.get('model');
+        setModelSource(modelId);
+    </script>
+</body>
+</html>
