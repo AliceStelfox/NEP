@@ -22,5 +22,5 @@ def generate_qr_code(url, output_filename="qr_code.png"):
     print(f"QR code generated and saved as: {output_filename}")
 
 # Example usage
-redirect_html_url = "https://github.com/AliceStelfox/NEP/blob/main/Android/Coloured_NEP_2xE4.glb" 
+redirect_html_url = "https://alicestelfox.github.io/NEP/index.html?model=model1" 
 generate_qr_code(redirect_html_url)
