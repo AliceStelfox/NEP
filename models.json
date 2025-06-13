@@ -1,6 +1,4 @@
 {
-    "model1": {
-        "ios": "https://github.com/AliceStelfox/NEP/blob/main/IOS/colour_NEP_3xE4.usdc",
-        "android": "https://github.com/AliceStelfox/NEP/blob/main/Android/Coloured_NEP_3xE4.glb"
-    }
+    "model1": { "ios": "colour_NEP_3xE4.usdc", "android": "Coloured_NEP_3xE4.glb" },
+    ...
 }
